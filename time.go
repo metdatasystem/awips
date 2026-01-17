@@ -1,6 +1,9 @@
 package awips
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 // Common timezones used in AWIPS products.
 var Timezones = map[string]*time.Location{
@@ -31,4 +34,16 @@ var Timezones = map[string]*time.Location{
 	"SST": time.FixedZone("SST", -11*60*60),
 	// Chamorro/Guam
 	"CHST": time.FixedZone("CHST", 10*60*60),
+}
+
+func GetTimezone(tzs string) *time.Location {
+	tzs = strings.ToUpper(tzs)
+
+	for key, timezone := range Timezones {
+		if key == tzs {
+			return timezone
+		}
+	}
+
+	return nil
 }
